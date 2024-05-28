@@ -58,21 +58,29 @@
   list-style-type: none;
 }
 
-.contact-form {
+.column {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.input-container {
   display: flex;
   flex-flow: column;
 }
 
-.contact-form input {
+.input-container input {
   padding: 4px;
   font-size: 0.8em;
   margin: 5px;
 }
 
-ul > li {
+.listItem {
+  display: flex;
+  justify-content: space-between;
   border-radius: 15px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.4em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -82,8 +90,12 @@ ul > li {
   margin: 5px 0;
 }
 
-ul > li:hover {
+.listItem:hover {
   background-color: #003f9c;
+}
+
+.listItem span {
+  margin-left: 10px;
 }
 
 .clearForm {

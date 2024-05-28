@@ -47,7 +47,7 @@ class App extends Component {
       <div className='container'>
         <div>
           <ContactList contacts={this.state.contacts}/>
-        <button className='add-btn'>New</button>
+          <button className='add-btn'>New</button>
         </div>
         <div>
           <ContactForm 

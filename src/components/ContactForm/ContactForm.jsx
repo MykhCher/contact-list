@@ -22,43 +22,46 @@ export class ContactForm extends Component {
 
   render() {
     return (
-      <form className='contact-form'>
-        <div>
-          <input 
-            type="text" 
-            value={this.state.fName} 
-            placeholder='First Name' 
-            onChange={(e) => {this.setState({fName :e.target.value})}}
-          />
+      <form className='column'>
+        <div className='input-container'>
+          <div>
+            <input 
+              type="text" 
+              value={this.state.fName} 
+              placeholder='First Name' 
+              onChange={(e) => {this.setState({fName :e.target.value})}}
+            />
+            <span className='clearForm'>X</span>
+          </div>
+          <div>
+            <input 
+              type="text" 
+              value={this.state.lName} 
+              placeholder='Last Name' 
+              onChange={(e) => {this.setState({lName :e.target.value})}}
+            />
           <span className='clearForm'>X</span>
+          </div>
+          <div>
+            <input 
+              type="text" 
+              value={this.state.phone} 
+              placeholder='Phone Number' 
+              onChange={(e) => {this.setState({phone :e.target.value})}}
+            />
+          <span className='clearForm'>X</span>
+          </div>
+          <div>
+            <input 
+              type="text" 
+              value={this.state.email} 
+              placeholder='Email' 
+              onChange={(e) => {this.setState({email :e.target.value})}}
+            />
+          <span className='clearForm'>X</span>
+          </div>
         </div>
-        <div>
-          <input 
-            type="text" 
-            value={this.state.lName} 
-            placeholder='Last Name' 
-            onChange={(e) => {this.setState({lName :e.target.value})}}
-          />
-        <span className='clearForm'>X</span>
-        </div>
-        <div>
-          <input 
-            type="text" 
-            value={this.state.phone} 
-            placeholder='Phone Number' 
-            onChange={(e) => {this.setState({phone :e.target.value})}}
-          />
-        <span className='clearForm'>X</span>
-        </div>
-        <div>
-          <input 
-            type="text" 
-            value={this.state.email} 
-            placeholder='Email' 
-            onChange={(e) => {this.setState({email :e.target.value})}}
-          />
-        <span className='clearForm'>X</span>
-        </div>
+
         <div className='btns'>
           <button onClick={this.onSubmit}>Save</button>
           <button>Delete</button>
