@@ -34,6 +34,14 @@ class App extends Component {
     ]
   };
 
+  createContact = (contact) => {
+    contact.id = Date.now();
+    contact.isEdited = false;
+    this.setState((state) => {
+      return {contacts: [...state.contacts, contact]}
+    });
+  }
+
   render() {
     return (
       <div className='container'>
@@ -42,7 +50,8 @@ class App extends Component {
         <button className='add-btn'>New</button>
         </div>
         <div>
-          <ContactForm />
+          <ContactForm 
+            onSubmit={this.createContact}/>
         </div>
       </div>
   )

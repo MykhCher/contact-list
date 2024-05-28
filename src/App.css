@@ -86,6 +86,18 @@ ul > li:hover {
   background-color: #003f9c;
 }
 
+.clearForm {
+  cursor: pointer;
+}
+
 .add-btn {
   margin-top: 20px;
+}
+
+.btns {
+  margin-top: 15px;
+}
+
+.btns button {
+  margin: 5px;
 }
