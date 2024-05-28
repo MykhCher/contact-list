@@ -2,7 +2,6 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -44,4 +43,49 @@
 .container {
   display: flex;
   justify-content: space-between;
+  border: 1px solid #0066ff
+}
+
+.container > div {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #0066ff;
+}
+
+.container ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.contact-form {
+  display: flex;
+  flex-flow: column;
+}
+
+.contact-form input {
+  padding: 4px;
+  font-size: 0.8em;
+  margin: 5px;
+}
+
+ul > li {
+  border-radius: 15px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #00255d;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin: 5px 0;
+}
+
+ul > li:hover {
+  background-color: #003f9c;
+}
+
+.add-btn {
+  margin-top: 20px;
 }
