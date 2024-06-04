@@ -1,7 +1,11 @@
-import { Component } from 'react'
-import './App.css'
-import ContactList from './components/ContactList/ContactList'
-import ContactForm from './components/ContactForm/ContactForm'
+import { Component } from 'react';
+import { nanoid } from 'nanoid';
+
+import ContactList from './components/ContactList/ContactList';
+import ContactForm from './components/ContactForm/ContactForm';
+
+import './App.css';
+
 
 class App extends Component {
 
@@ -35,10 +39,16 @@ class App extends Component {
   };
 
   createContact = (contact) => {
-    contact.id = Date.now();
+    contact.id = nanoid();
     contact.isEdited = false;
     this.setState((state) => {
       return {contacts: [...state.contacts, contact]}
+    });
+  }
+
+  deleteContact = (id) => {
+    this.setState((state) => {
+      return {contacts: state.contacts.filter((contact) => contact.id !== id)}
     });
   }
 
@@ -46,7 +56,10 @@ class App extends Component {
     return (
       <div className='container'>
         <div>
-          <ContactList contacts={this.state.contacts}/>
+          <ContactList 
+            contacts={this.state.contacts}
+            onDelete={this.deleteContact}
+          />
           <button className='add-btn'>New</button>
         </div>
         <div>
