@@ -10,31 +10,18 @@ import './App.css';
 class App extends Component {
 
   state = {
-    contacts: [
-      {
-        id: 1,
-        fName: 'John',
-        lName: 'Doe',
-        phone: '+380509999999',
-        email: 'johndoe@example.com',
-      },
-      {
-        id: 2,
-        fName: 'Tsukiyama',
-        lName: 'Shuu',
-        phone: '+420509875624',
-        email: 'legourmet@example.com',
-      },
-      {
-        id: 3,
-        fName: 'Mads',
-        lName: 'Mikkelsen',
-        phone: '+450504567890',
-        email: 'madsmikkelsen@example.com',
-      },
-    ],
+    contacts: [],
     editContact: this.createEmptyContact(),
   };
+
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (!contacts) {
+      this.setState({contacts: []});
+    } else {
+      this.setState({contacts: [...contacts]})
+    }
+  }
 
   createEmptyContact() {
     return {
@@ -58,23 +45,33 @@ class App extends Component {
     if (!contact.id) {
       contact.id = nanoid();
       this.setState((state) => {
-        return {contacts: [...state.contacts, contact]}
+        const newContacts = [...state.contacts, contact];
+        this.saveContacts(newContacts);
+        return {contacts: newContacts}
       });
     }
     this.setState(
       (state) => {
-        return {contacts: state.contacts.map((oldContact) => oldContact.id === contact.id ? contact : oldContact)}
+        const newContacts = state.contacts.map((oldContact) => oldContact.id === contact.id ? contact : oldContact);
+        this.saveContacts(newContacts);
+        return {contacts: newContacts}
       }
     )
   }
 
   deleteContact = (id) => {
     this.setState((state) => {
+      const newContacts = state.contacts.filter((contact) => contact.id !== id);
+      this.saveContacts(newContacts);
       return {
-        contacts: state.contacts.filter((contact) => contact.id !== id), 
+        contacts: newContacts, 
         editContact: state.editContact.id === id ? this.createEmptyContact() : state.editContact
       }
     });
+  }
+
+  saveContacts = (contacts) => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   }
 
   render() {
