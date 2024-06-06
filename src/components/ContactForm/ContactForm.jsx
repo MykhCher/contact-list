@@ -14,6 +14,11 @@ export class ContactForm extends Component {
     this.props.onDelete(this.state.id)
   }
 
+  onFormClear = e => {
+    const inputField = e.target.previousSibling;
+    this.setState({[inputField.name]: ''});
+  }
+
   render() {
     return (
       <>
@@ -23,38 +28,42 @@ export class ContactForm extends Component {
             <div>
               <input 
                 type="text" 
+                name="fName"
                 value={this.state.fName} 
                 placeholder='First Name' 
                 onChange={(e) => {this.setState({fName :e.target.value})}}
               />
-              <span className='clearForm'>X</span>
+              <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
             <div>
               <input 
                 type="text" 
+                name="lName"
                 value={this.state.lName} 
                 placeholder='Last Name' 
                 onChange={(e) => {this.setState({lName :e.target.value})}}
               />
-            <span className='clearForm'>X</span>
+            <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
             <div>
               <input 
                 type="text" 
+                name="phone"
                 value={this.state.phone} 
                 placeholder='Phone Number' 
                 onChange={(e) => {this.setState({phone :e.target.value})}}
               />
-            <span className='clearForm'>X</span>
+            <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
             <div>
               <input 
                 type="text" 
+                name="email"
                 value={this.state.email} 
                 placeholder='Email' 
                 onChange={(e) => {this.setState({email :e.target.value})}}
               />
-            <span className='clearForm'>X</span>
+            <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
           </div>
 
