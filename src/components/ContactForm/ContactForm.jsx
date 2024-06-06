@@ -2,22 +2,12 @@ import { Component } from 'react'
 
 export class ContactForm extends Component {
 
-  state = {
-    fName: '',
-    lName: '',
-    phone: '',
-    email: '',
-  };
+  state = {...this.props.editContact};
 
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-    this.setState({
-      fName: '',
-      lName: '',
-      phone: '',
-      email: '',
-    });
+    this.setState(this.props.editContact.id ? this.state : this.props.emptyContact());
   }
 
   render() {
@@ -64,7 +54,7 @@ export class ContactForm extends Component {
 
         <div className='btns'>
           <button onClick={this.onSubmit}>Save</button>
-          <button>Delete</button>
+          <button hidden={!this.props.editContact.id}>Delete</button>
         </div>
       </form>
     )

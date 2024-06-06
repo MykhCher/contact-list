@@ -17,7 +17,6 @@ class App extends Component {
         lName: 'Doe',
         phone: '+380509999999',
         email: 'johndoe@example.com',
-        isEdited: false,
       },
       {
         id: 2,
@@ -25,7 +24,6 @@ class App extends Component {
         lName: 'Shuu',
         phone: '+420509875624',
         email: 'legourmet@example.com',
-        isEdited: false,
       },
       {
         id: 3,
@@ -33,22 +31,46 @@ class App extends Component {
         lName: 'Mikkelsen',
         phone: '+450504567890',
         email: 'madsmikkelsen@example.com',
-        isEdited: false,
       },
-    ]
+    ],
+    editContact: this.createEmptyContact(),
   };
 
+  createEmptyContact() {
+    return {
+      id: null,
+      fName: '',
+      lName: '',
+      phone: '',
+      email: '',
+    }
+  }
+
+  toggleToEdit = (contact) => {
+    this.setState({editContact: contact});
+  }
+
+  toggleToAdd = () => {
+    this.setState({editContact: this.createEmptyContact()});
+  }
+
   createContact = (contact) => {
-    contact.id = nanoid();
-    contact.isEdited = false;
-    this.setState((state) => {
-      return {contacts: [...state.contacts, contact]}
-    });
+    if (!contact.id) {
+      contact.id = nanoid();
+      this.setState((state) => {
+        return {contacts: [...state.contacts, contact]}
+      });
+    }
+    this.setState(
+      (state) => {
+        return {contacts: state.contacts.map((oldContact) => oldContact.id === contact.id ? contact : oldContact)}
+      }
+    )
   }
 
   deleteContact = (id) => {
     this.setState((state) => {
-      return {contacts: state.contacts.filter((contact) => contact.id !== id)}
+      return {contacts: state.contacts.filter((contact) => contact.id !== id), editContact: state.editContact.id === id ? this.createEmptyContact() : state.editContact}
     });
   }
 
@@ -59,12 +81,17 @@ class App extends Component {
           <ContactList 
             contacts={this.state.contacts}
             onDelete={this.deleteContact}
+            tglEdit={this.toggleToEdit}
           />
-          <button className='add-btn'>New</button>
+          <button className='add-btn' onClick={this.toggleToAdd}>New</button>
         </div>
         <div>
           <ContactForm 
-            onSubmit={this.createContact}/>
+            onSubmit={this.createContact}
+            editContact={this.state.editContact}
+            emptyContact={this.createEmptyContact}
+            key={this.state.editContact.id}
+          />
         </div>
       </div>
   )

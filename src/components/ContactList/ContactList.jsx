@@ -9,7 +9,13 @@ export class ContactList extends Component {
         {this.props.contacts.map(
             (contact) => {
                 return (
-                    <li key={contact.fName}><ContactItem contact={contact} onDelete={this.props.onDelete}/></li>
+                    <li key={contact.fName}>
+                      <ContactItem 
+                        contact={contact} 
+                        onDelete={this.props.onDelete}
+                        tglEdit={this.props.tglEdit}
+                      />
+                    </li>
                 );
             }
         )}
