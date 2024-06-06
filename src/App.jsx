@@ -70,30 +70,37 @@ class App extends Component {
 
   deleteContact = (id) => {
     this.setState((state) => {
-      return {contacts: state.contacts.filter((contact) => contact.id !== id), editContact: state.editContact.id === id ? this.createEmptyContact() : state.editContact}
+      return {
+        contacts: state.contacts.filter((contact) => contact.id !== id), 
+        editContact: state.editContact.id === id ? this.createEmptyContact() : state.editContact
+      }
     });
   }
 
   render() {
     return (
-      <div className='container'>
-        <div>
-          <ContactList 
-            contacts={this.state.contacts}
-            onDelete={this.deleteContact}
-            tglEdit={this.toggleToEdit}
-          />
-          <button className='add-btn' onClick={this.toggleToAdd}>New</button>
+      <>
+        <h1>Contact List</h1>
+        <div className='container'>
+          <div>
+            <h2>Contacts</h2>
+            <ContactList 
+              contacts={this.state.contacts}
+              onDelete={this.deleteContact}
+              tglEdit={this.toggleToEdit}
+            />
+            <button className='add-btn' onClick={this.toggleToAdd}>New</button>
+          </div>
+          <div>
+            <ContactForm 
+              onSubmit={this.createContact}
+              editContact={this.state.editContact}
+              emptyContact={this.createEmptyContact}
+              key={this.state.editContact.id}
+            />
+          </div>
         </div>
-        <div>
-          <ContactForm 
-            onSubmit={this.createContact}
-            editContact={this.state.editContact}
-            emptyContact={this.createEmptyContact}
-            key={this.state.editContact.id}
-          />
-        </div>
-      </div>
+      </>
   )
 }
 }
