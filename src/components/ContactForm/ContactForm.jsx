@@ -10,6 +10,10 @@ export class ContactForm extends Component {
     this.setState(this.props.editContact.id ? this.state : this.props.emptyContact());
   }
 
+  onDelete = () => {
+    this.props.onDelete(this.state.id)
+  }
+
   render() {
     return (
       <>
@@ -56,7 +60,7 @@ export class ContactForm extends Component {
 
           <div className='btns'>
             <button onClick={this.onSubmit}>Save</button>
-            <button hidden={!this.props.editContact.id}>Delete</button>
+            <button hidden={!this.props.editContact.id} onClick={this.onDelete}>Delete</button>
           </div>
         </form>
       </>

@@ -94,6 +94,7 @@ class App extends Component {
           <div>
             <ContactForm 
               onSubmit={this.createContact}
+              onDelete={this.deleteContact}
               editContact={this.state.editContact}
               emptyContact={this.createEmptyContact}
               key={this.state.editContact.id}
