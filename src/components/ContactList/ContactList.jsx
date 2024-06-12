@@ -9,7 +9,7 @@ export class ContactList extends Component {
         {this.props.contacts.map(
             (contact) => {
                 return (
-                    <li key={contact.fName}>
+                    <li key={contact.id}>
                       <ContactItem 
                         contact={contact} 
                         onDelete={this.props.onDelete}
