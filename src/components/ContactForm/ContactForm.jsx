@@ -19,6 +19,10 @@ export class ContactForm extends Component {
     this.setState({[inputField.name]: ''});
   }
 
+  onFormChange = e => {
+    this.setState({[e.target.name]: e.target.value});
+  }
+
   render() {
     return (
       <>
@@ -31,7 +35,7 @@ export class ContactForm extends Component {
                 name="fName"
                 value={this.state.fName} 
                 placeholder='First Name' 
-                onChange={(e) => {this.setState({fName :e.target.value})}}
+                onChange={this.onFormChange}
               />
               <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
@@ -41,7 +45,7 @@ export class ContactForm extends Component {
                 name="lName"
                 value={this.state.lName} 
                 placeholder='Last Name' 
-                onChange={(e) => {this.setState({lName :e.target.value})}}
+                onChange={this.onFormChange}
               />
             <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
@@ -51,7 +55,7 @@ export class ContactForm extends Component {
                 name="phone"
                 value={this.state.phone} 
                 placeholder='Phone Number' 
-                onChange={(e) => {this.setState({phone :e.target.value})}}
+                onChange={this.onFormChange}
               />
             <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
@@ -61,15 +65,26 @@ export class ContactForm extends Component {
                 name="email"
                 value={this.state.email} 
                 placeholder='Email' 
-                onChange={(e) => {this.setState({email :e.target.value})}}
+                onChange={this.onFormChange}
               />
             <span className='clearForm' onClick={this.onFormClear}>X</span>
             </div>
           </div>
 
           <div className='btns'>
-            <button onClick={this.onSubmit}>Save</button>
-            <button hidden={!this.props.editContact.id} onClick={this.onDelete}>Delete</button>
+            <button 
+              onClick={this.onSubmit}
+              className='save-btn'
+            >
+              Save
+            </button>
+            <button 
+              hidden={!this.props.editContact.id} 
+              onClick={this.onDelete}
+              className='delete-btn'
+            >
+              Delete
+            </button>
           </div>
         </form>
       </>

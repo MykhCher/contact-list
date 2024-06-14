@@ -173,4 +173,13 @@ button:focus-visible {
 input[type="text"] {
   background-color: #3f3f3f;
   border: 1px solid #6a6a6a;
+  color: #ddd;
+}
+
+.save-btn {
+  background-color: #00200a;
+}
+
+.delete-btn {
+  background-color: #200606;
 }
