@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 
+import { createEmptyContact } from './constants/constants';
+
 import ContactList from './components/ContactList/ContactList';
 import ContactForm from './components/ContactForm/ContactForm';
 
@@ -11,7 +13,7 @@ class App extends Component {
 
   state = {
     contacts: [],
-    editContact: this.createEmptyContact(),
+    editContact: createEmptyContact(),
   };
 
   componentDidMount() {
@@ -23,22 +25,12 @@ class App extends Component {
     }
   }
 
-  createEmptyContact() {
-    return {
-      id: null,
-      fName: '',
-      lName: '',
-      phone: '',
-      email: '',
-    }
-  }
-
   toggleToEdit = (contact) => {
     this.setState({editContact: contact});
   }
 
   toggleToAdd = () => {
-    this.setState({editContact: this.createEmptyContact()});
+    this.setState({editContact: createEmptyContact()});
   }
 
   createContact = (contact) => {
@@ -65,7 +57,7 @@ class App extends Component {
       this.saveContacts(newContacts);
       return {
         contacts: newContacts, 
-        editContact: state.editContact.id === id ? this.createEmptyContact() : state.editContact
+        editContact: state.editContact.id === id ? createEmptyContact() : state.editContact
       }
     });
   }
@@ -93,7 +85,6 @@ class App extends Component {
               onSubmit={this.createContact}
               onDelete={this.deleteContact}
               editContact={this.state.editContact}
-              emptyContact={this.createEmptyContact}
               key={this.state.editContact.id}
             />
           </div>

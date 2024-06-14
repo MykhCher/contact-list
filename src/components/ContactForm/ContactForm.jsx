@@ -1,4 +1,7 @@
-import { Component } from 'react'
+import { Component } from 'react';
+
+import { createEmptyContact } from '../../constants/constants';
+
 
 export class ContactForm extends Component {
 
@@ -7,7 +10,7 @@ export class ContactForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-    this.setState(this.props.editContact.id ? this.state : this.props.emptyContact());
+    this.setState(this.props.editContact.id ? this.state : createEmptyContact());
   }
 
   onDelete = () => {
