@@ -33,7 +33,7 @@ class App extends Component {
     this.setState({editContact: createEmptyContact()});
   }
 
-  createContact = (contact) => {
+  createOrUpdateContact = (contact) => {
     if (!contact.id) {
       contact.id = nanoid();
       this.setState((state) => {
@@ -82,7 +82,7 @@ class App extends Component {
           </div>
           <div>
             <ContactForm 
-              onSubmit={this.createContact}
+              onSubmit={this.createOrUpdateContact}
               onDelete={this.deleteContact}
               editContact={this.state.editContact}
               key={this.state.editContact.id}
