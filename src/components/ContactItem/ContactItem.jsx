@@ -7,13 +7,13 @@ export class ContactItem extends Component {
     this.props.onDelete(this.props.contact.id);
   }
 
-  onDoubleClick = () => {
+  onContactChange = () => {
     this.props.tglEdit(this.props.contact);
   }
 
   render() {
     return (
-      <div className='listItem' onDoubleClick={this.onDoubleClick}>
+      <div className='listItem' onDoubleClick={this.onContactChange}>
         <div>
           {this.props.contact.fName} {this.props.contact.lName}
         </div>
