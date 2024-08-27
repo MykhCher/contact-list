@@ -12,37 +12,36 @@ import './App.css';
 function App() {
 
   const [contacts, setContacts] = useState([]);
-  const [editContact, setEditContact] = useState(createEmptyContact());
+  const [contactToEdit, setContactToEdit] = useState(createEmptyContact());
 
   useEffect(()=> {
     const contacts = JSON.parse(localStorage.getItem('contacts'));
     setContacts(contacts);
   }, []);
 
+
   const toggleToEdit = (contact) => {
-    setEditContact(contact);
+    setContactToEdit(contact);
   }
 
   const toggleToAdd = () => {
-    setEditContact(createEmptyContact());
+    setContactToEdit(createEmptyContact());
   }
 
-  const createOrUpdateContact = (contact) => {
-    if (!contact.id) {
-      contact.id = nanoid();
-      setContacts((state) => {
-        const newContacts = [...state, contact];
-        saveContacts(newContacts);
-        return newContacts
-      });
-    }
-    setContacts(
-      (state) => {
-        const newContacts = state.map((oldContact) => oldContact.id === contact.id ? contact : oldContact);
-        saveContacts(newContacts);
-        return newContacts
-      }
-    )
+  const addContact = (contact) => {
+    contact.id = nanoid();
+
+    const newContacts = [...contacts, contact];
+
+    setContacts(newContacts);
+    saveContacts(newContacts);
+  }
+
+  const editContact = (contact) => {
+    const editedContacts = contacts.map(item => item.id === contact.id ? contact : item); 
+
+    setContacts(editedContacts);
+    saveContacts(editedContacts);
   }
 
   const deleteContact = (id) => {
@@ -51,12 +50,14 @@ function App() {
       saveContacts(newContacts);
       return newContacts;
     });
-    setEditContact(editContact.id === id ? createEmptyContact() : editContact)
+    setContactToEdit(contactToEdit.id === id ? createEmptyContact() : contactToEdit)
   }
 
+  
   const saveContacts = (contacts) => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
+
 
     return (
       <>
@@ -73,10 +74,11 @@ function App() {
           </div>
           <div>
             <ContactForm 
-              onSubmit={createOrUpdateContact}
-              onDelete={deleteContact}
+              addContact={addContact}
               editContact={editContact}
-              key={editContact.id}
+              onDelete={deleteContact}
+              contactToEdit={contactToEdit}
+              key={contactToEdit.id}
             />
           </div>
         </div>

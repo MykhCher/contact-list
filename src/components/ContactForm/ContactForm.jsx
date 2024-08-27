@@ -5,12 +5,17 @@ import { createEmptyContact } from '../../constants/constants';
 
 function ContactForm(props) {
 
-  const [editContact, setEditContact] = useState(props.editContact);
+  const [editContact, setEditContact] = useState(props.contactToEdit);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    props.onSubmit(editContact);
-    setEditContact(props.editContact.id ? editContact : createEmptyContact());
+    if (editContact.id) {
+      props.editContact(editContact);
+      setEditContact(editContact);
+    } else {
+      props.addContact(editContact);
+      setEditContact(createEmptyContact());
+    }
   }
 
   const onDelete = () => {
@@ -81,7 +86,7 @@ function ContactForm(props) {
               Save
             </button>
             <button 
-              hidden={!props.editContact.id} 
+              hidden={!props.contactToEdit.id} 
               onClick={onDelete}
               className='delete-btn'
             >
