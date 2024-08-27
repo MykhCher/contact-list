@@ -7,3 +7,4 @@ export function createEmptyContact() {
         email: '',
     }
 }
+export const BASE_URL = 'http://localhost:5000/contacts';

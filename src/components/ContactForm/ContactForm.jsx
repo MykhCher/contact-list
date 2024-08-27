@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { createEmptyContact } from '../../constants/constants';
+import { createEmptyContact } from '../../constants';
 
 
 function ContactForm(props) {
@@ -18,7 +18,8 @@ function ContactForm(props) {
     }
   }
 
-  const onDelete = () => {
+  const onDelete = (e) => {
+    e.preventDefault();
     props.onDelete(editContact.id)
   }
 

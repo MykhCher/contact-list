@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
-
-import { createEmptyContact } from './constants/constants';
-
+// =====
+import api from './api/contactService';
+import { createEmptyContact } from './constants';
 import ContactList from './components/ContactList/ContactList';
 import ContactForm from './components/ContactForm/ContactForm';
 
@@ -15,8 +15,10 @@ function App() {
   const [contactToEdit, setContactToEdit] = useState(createEmptyContact());
 
   useEffect(()=> {
-    const contacts = JSON.parse(localStorage.getItem('contacts'));
-    setContacts(contacts);
+    api.get('/')
+      .then(res => {
+        setContacts(res.data);
+      })
   }, []);
 
 
@@ -30,34 +32,33 @@ function App() {
 
   const addContact = (contact) => {
     contact.id = nanoid();
-
-    const newContacts = [...contacts, contact];
-
-    setContacts(newContacts);
-    saveContacts(newContacts);
-  }
+    api.post('/', contact)
+      .then(res => {
+        const newContacts = [...contacts, res.data];
+        setContacts(newContacts);
+      })
+      .catch(err => console.log(err));
+    }
 
   const editContact = (contact) => {
-    const editedContacts = contacts.map(item => item.id === contact.id ? contact : item); 
-
-    setContacts(editedContacts);
-    saveContacts(editedContacts);
+    api.put(`/${contact.id}`, contact)
+    .then(res => {
+      const editedContacts = contacts.map(item => item.id === res.data.id ? res.data : item); 
+      setContacts(editedContacts);
+    })
+    .catch(err => console.log(err));
   }
 
   const deleteContact = (id) => {
-    setContacts((state) => {
-      const newContacts = state.filter((contact) => contact.id !== id);
-      saveContacts(newContacts);
-      return newContacts;
-    });
-    setContactToEdit(contactToEdit.id === id ? createEmptyContact() : contactToEdit)
-  }
-
-  
-  const saveContacts = (contacts) => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }
-
+    api.delete(`/${id}`)
+      .then(() => {
+        const newContacts = contacts.filter((contact) => contact.id !== id);
+        setContacts(newContacts);
+        if (contactToEdit.id === id) {
+          setContactToEdit(createEmptyContact());
+        }
+      });
+    }
 
     return (
       <>
