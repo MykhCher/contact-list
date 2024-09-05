@@ -15,3 +15,7 @@ export function updateContact(contact) {
 export function getContacts(contacts) {
     return {type: actionTypes.GET_CONTACTS, payload: contacts}
 }
+
+export function toggleContact(id) {
+    return {type: actionTypes.TOGGLE_TO_EDIT, payload: id}
+}

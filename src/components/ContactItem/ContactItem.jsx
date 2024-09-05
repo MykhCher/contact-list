@@ -1,18 +1,30 @@
+import { useDispatch } from "react-redux";
+import { deleteContact, toggleContact } from "../../store/actions/contactActions";
+import api from '../../api/contactService';
+
 function ContactItem(props) {
+
+  const {id, fName, lName} = props.contact;
+
+  const dispatch = useDispatch();
 
   const onContactDelete = (e) => {
     e.stopPropagation();
-    props.onDelete(props.contact.id);
+    api.delete(`/${id}`)
+      .then(() => {
+        dispatch(deleteContact(id));
+        dispatch(toggleContact(null));
+      });
   }
 
   const onContactChange = () => {
-    props.tglEdit(props.contact);
+    dispatch(toggleContact(id));
   }
 
   return (
     <div className='listItem' onDoubleClick={onContactChange}>
       <div>
-        {props.contact.fName} {props.contact.lName}
+        {fName} {lName}
       </div>
       <span onClick={onContactDelete}>X</span>
     </div>

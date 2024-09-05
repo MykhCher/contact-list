@@ -1,7 +1,10 @@
 import { initialContacts } from "../../constants";
 import actionTypes from "../actions/actionTypes";
 
-const initState = {contacts: initialContacts}
+const initState = {
+    contacts: initialContacts, 
+    contactToEdit: null
+}
 
 export default function (state=initState, { type, payload }) {
     switch (type) {
@@ -28,6 +31,12 @@ export default function (state=initState, { type, payload }) {
                 ...state, 
                 contacts: payload
             };
+
+        case actionTypes.TOGGLE_TO_EDIT: 
+            return {
+                ...state,
+                contactToEdit: payload
+            }
 
         default: return state;
     }

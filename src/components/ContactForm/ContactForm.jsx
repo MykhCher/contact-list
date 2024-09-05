@@ -1,26 +1,46 @@
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+// =====
+import api from '../../api/contactService';
 import { createEmptyContact } from '../../constants';
+import { addContact, deleteContact, updateContact } from '../../store/actions/contactActions';
 
 
-function ContactForm(props) {
+function ContactForm() {
 
-  const [editContact, setEditContact] = useState(props.contactToEdit);
+  const dispatch = useDispatch();
+  const idToEdit = useSelector(state => state.contactToEdit);
+  const [editContact, setEditContact] = useState(createEmptyContact());
 
+  useEffect(() => {
+    idToEdit 
+      ? api.get(`/${idToEdit}`)
+        .then(({data}) => setEditContact(data)) 
+      : setEditContact(createEmptyContact());
+    }, [idToEdit])
+  
   const onSubmit = (e) => {
     e.preventDefault();
-    if (editContact.id) {
-      props.editContact(editContact);
-      setEditContact(editContact);
-    } else {
-      props.addContact(editContact);
-      setEditContact(createEmptyContact());
-    }
+    idToEdit
+      ? api.put(`/${idToEdit}`, editContact)
+        .then(({data}) => {
+          dispatch(updateContact(data.id));
+          setEditContact(data)
+        })
+      : api.post('/', editContact)
+        .then(({data}) => {
+          dispatch(addContact(data));
+          setEditContact(createEmptyContact());
+        })
   }
 
   const onDelete = (e) => {
     e.preventDefault();
-    props.onDelete(editContact.id)
+    api.delete(`/${idToEdit}`)
+      .then(() => {
+        dispatch(deleteContact(idToEdit));
+        setEditContact(createEmptyContact());
+      });
   }
 
   const onFormClear = e => {
@@ -34,7 +54,7 @@ function ContactForm(props) {
 
     return (
       <>
-        <h2>{editContact.id ? 'Edit' : 'Add'} Contact</h2>
+        <h2>{idToEdit ? 'Edit' : 'Add'} Contact</h2>
         <form className='column'>
           <div className='input-container'>
             <div>
@@ -87,7 +107,7 @@ function ContactForm(props) {
               Save
             </button>
             <button 
-              hidden={!props.contactToEdit.id} 
+              hidden={!idToEdit} 
               onClick={onDelete}
               className='delete-btn'
             >

@@ -3,4 +3,5 @@ export default {
     UPDATE_CONTACT: 'updateContact',
     DELETE_CONTACT: 'deleteContact',
     GET_CONTACTS: 'getContacts',
+    TOGGLE_TO_EDIT: 'toggleContact'
 }
